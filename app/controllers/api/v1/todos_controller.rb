@@ -1,7 +1,6 @@
-module API
+module Api
   module V1
     class TodosController < ApplicationController
-      skip_before_filter :verify_authenticity_token
       respond_to :json
 
       def index
@@ -33,6 +32,12 @@ module API
       def destroy
         respond_with Todo.destroy(params[:id])
       end
+
+      private
+      def todo_params
+        params.require(:todo).permit(:title, :completed)
+      end
+
     end
   end
 end
